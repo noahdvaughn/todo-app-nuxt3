@@ -5,7 +5,31 @@
 
         <div class="flex header">
             <h2 class="header__title">ToDo's</h2>
-            <i class="pi pi-ellipsis-h header__icon" ></i>
+            <!-- <i class="pi pi-ellipsis-h header__icon" ></i> -->
+
+        <div>
+            <i class='pi pi-ellipsis-h header__icon' @click="toggle" aria-haspopup="true" aria-controls="overlay_menu"></i>
+            <Menu :model="menuItems" ref="menu" id="overlay_menu" :popup="true" class='menu' :focused=false
+            
+            :pt="{
+                root: (options) => ({
+                    style: {
+                        'background-color': 'black',
+                        'color': 'black',
+                        'fill': 'black',
+                        'border': 'none',
+                     },
+                }),
+                content: (options) => ({
+                    style: {
+                        'background-color': 'black',                        
+                     },
+                }),
+            
+            }"
+            
+            />    
+        </div>
         </div>
         
     <div class="flex navbar">
@@ -25,6 +49,26 @@ import {storeToRefs} from 'pinia'
 const store = useOpenedStore()
 const {viewingOpen} = storeToRefs(store)
 const {setViewingOpen} = store
+const menu = ref();
+
+
+const toggle = (event: any) => {
+    menu.value.toggle(event);
+};
+const menuItems = ref([                 
+            {
+                label: 'Logout',           
+                command: () => {
+                               
+                }
+            },
+            {
+                label: 'Register',                
+                command: () => {
+                    
+                }
+            }
+])
 
 
 </script>

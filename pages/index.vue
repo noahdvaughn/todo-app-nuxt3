@@ -23,7 +23,8 @@
 </template>
 
 <script setup lang="ts">
-// const user = useStrapiUser();
+const user = useStrapiUser();
+console.log(user.value)
 
 useHead({
   title: "ToDo"
