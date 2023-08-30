@@ -5,8 +5,6 @@
 
         <div class="flex header">
             <h2 class="header__title">ToDo's</h2>
-            <!-- <i class="pi pi-ellipsis-h header__icon" ></i> -->
-
         <div>
             <i class='pi pi-ellipsis-h header__icon' @click="toggle" aria-haspopup="true" aria-controls="overlay_menu"></i>
             <Menu :model="menuItems" ref="menu" id="overlay_menu" :popup="true" class='menu' :focused=false
@@ -24,10 +22,8 @@
                     style: {
                         'background-color': 'black',                        
                      },
-                }),
-            
-            }"
-            
+                }),           
+            }"           
             />    
         </div>
         </div>
@@ -51,6 +47,8 @@ const {viewingOpen} = storeToRefs(store)
 const {setViewingOpen} = store
 const menu = ref();
 
+const { logout } = useStrapiAuth()
+const router = useRouter()
 
 const toggle = (event: any) => {
     menu.value.toggle(event);
@@ -58,18 +56,17 @@ const toggle = (event: any) => {
 const menuItems = ref([                 
             {
                 label: 'Logout',           
-                command: () => {
-                               
+                command: () => {   
+                    logout()    
+                    router.push('/login')                        
                 }
             },
             {
                 label: 'Register',                
-                command: () => {
-                    
+                command: () => {                   
                 }
             }
 ])
-
 
 </script>
 <style scoped lang="scss">

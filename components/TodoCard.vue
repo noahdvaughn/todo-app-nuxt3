@@ -96,7 +96,9 @@ const {item} = defineProps({
 }
 .todo{
     display: flex;
-    width: 343px;
+    width: 70vw;
+
+    min-width: 343px;
     height: 84px;
     background-color: #292639;
     border-radius: 10px;

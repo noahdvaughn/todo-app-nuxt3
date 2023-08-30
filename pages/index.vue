@@ -134,7 +134,8 @@ const searchTodo = async () => {
 }
 .feed{
     height: auto;
-    width: 343px;
+    width: 70vw;
+    min-width: 343px;
     height: 484px;
     overflow-y: scroll;
     

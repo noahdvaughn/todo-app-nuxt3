@@ -1,32 +1,46 @@
 <template lang="">
     <h1 v-if='user.value'>You are logged in</h1>
     <div class='main'>
-       <!-- <img src='@/assets/Rectangle.png'/> -->
-
         
         <div class='header'>
             <h1 class='header-h1'>Login</h1>
         </div>
         <form @submit.prevent="onSubmit" class='form' ref='form'>
-            <InputText  v-model="user.email" class='form-item' />
-            <InputText  v-model="user.password" class='form-item' />
-        
+            <InputText  v-model="user.email" class='form-item' placeholder='Email or Username'/>
 
+            <Password v-model="user.password" toggleMask  :feedback="false"  
+            inputClass='form-item' class='mt-3' placeholder='Password'
+            :pt="{
+                input: (options) => ({
+                    style: {
+                        'background-color': '#292639',
+                        'border': 'none',
+                        'width': '343px',
+
+                     },
+                }),
+            }"
+
+            
+            />
+            
             <div>
                 
             </div>
             <Button class='button mt-6' style='background-color: #6ADD8A ;' label='Login' type='submit' />
-            <Button class='button' label='Quit' text @click='' />
+            <Button class='button' label='Register' text @click='' />
+            <Toast class='toast' position='top-center' />
         </form>
 
     </div>
 </template>
 
 <script setup lang="ts">
-// const user = useStrapiUser();
+import { useToast } from "primevue/usetoast";
 const { login } = useStrapiAuth()
 const showPassword = ref(false);
 const form = ref();
+const toast = useToast();
 
 
 
@@ -44,46 +58,32 @@ const emit = defineEmits<{
 
 const onSubmit = async () => {
 
+      try {      
+        const computedRoute = computed((): string => {
+      const redirectCookieValue = useCookie("redirect").value;
 
-
-      try {
-          
-    //     const computedRoute = computed((): string => {
-    //   const redirectCookieValue = useCookie("redirect").value;
-
-    //   if (redirectCookieValue && typeof redirectCookieValue === "string") {
-    //     return redirectCookieValue;
-    //   } else {
-    //     return "/";
-    //   }
-    // });
-              
-          
+      if (redirectCookieValue && typeof redirectCookieValue === "string") {
+        return redirectCookieValue;
+      } else {
+        return "/";
+      }
+    });      
               await login({
                 identifier: user.value.email,
                 password: user.value.password,
               })
-                // .then(() => {
-                //   navigateTo(computedRoute.value);
-                // })
-                // .finally(() => {
-                //   form.value.reset();
-                // });
+                .then(() => {
+                  navigateTo(computedRoute.value);
+                })
+                .finally(() => {
+                  form.value.reset();
+                });
         
       } catch (error) {
         console.log(error)
+        toast.add({ severity: 'error', summary: 'Incorrect username or password', life: 1000 });
         
       }
-//     try {
-//     await login({ identifier: user.value.email, password: user.value.password })
-//     .then(() => {
-//         navigateTo('/');
-//       })
-//     // router.push('/authenticated-page')
-//   } catch (e) {
-//     console.log(e);
-//   }
-
 }
 
 
@@ -121,8 +121,8 @@ const onSubmit = async () => {
     align-items: center;
 
     &-item{
-        width: 343px;
-        background-color: #292639;
+        width: 343px !important;
+        background-color: #292639 !important;
         border: none;
         margin-top: 15px;
     }
@@ -146,6 +146,9 @@ const onSubmit = async () => {
     left: 10px;
     font-size: 20px;
 
+}
+.toast{
+    width: 100px !important;
 }
 
 
