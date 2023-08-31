@@ -60,11 +60,6 @@ const menuItems = ref([
                     logout()    
                     router.push('/login')                        
                 }
-            },
-            {
-                label: 'Register',                
-                command: () => {                   
-                }
             }
 ])
 
