@@ -3,13 +3,13 @@
     <div class='main'>
         
         <div class='header'>
-            <h1 class='header-h1'>Login</h1>
+            <h1 class='header__h1'>Login</h1>
         </div>
         <form @submit.prevent="onSubmit" class='form' ref='form'>
-            <InputText  v-model="user.email" class='form-item' placeholder='Email or Username' />
+            <InputText  v-model="user.email" class='form__item' placeholder='Email or Username' />
 
             <Password v-model="user.password" toggleMask  :feedback="false"  
-            inputClass='form-item' class='mt-3' placeholder='Password'
+            inputClass='form__item' class='mt-3' placeholder='Password'
             :pt="{
                 input: (options) => ({
                     style: {
@@ -89,7 +89,6 @@ const onSubmit = async () => {
                 });
         
       } catch (error) {
-        console.log(error)
         toast.add({ severity: 'error', summary: 'Incorrect username or password', life: 1000 });
         
       }
@@ -116,7 +115,7 @@ const onSubmit = async () => {
 .header{
     display: flex;
     align-items: center;
-    &-h1{
+    &__h1{
         font-size: 24px;
         line-height: 20px;
         font-weight: 500;
@@ -129,7 +128,7 @@ const onSubmit = async () => {
     min-height: 327px;
     align-items: center;
 
-    &-item{
+    &__item{
         width: 343px !important;
         background-color: #292639 !important;
         border: none;
@@ -155,9 +154,6 @@ const onSubmit = async () => {
     left: 10px;
     font-size: 20px;
 
-}
-.toast{
-    width: 100px !important;
 }
 
 
